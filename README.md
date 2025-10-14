@@ -3,12 +3,28 @@ rectarg.py v1.0  —  Complete Reference and Usage Notes
 --------------------------------------------------------------------------------
 Author: Knut Larsson with support from ChatGPT
 
-Recreate a calibration target as an image from ArgyllCMS-style `.cht` + `.cie` pair.
+Recreate a calibration target as an image from ArgyllCMS-style `.cht` + `.cie` 
+pair. Calibration targets are used for calibration of scanners and displays so 
+that screen and scanned material look the same. Usually, those that sell 
+Calibration Targets keep their original digital image for them self, for business 
+reasons.
 
-This version has been tested on **Wolf Faust**, **LaserSoft** and **Hutchcolor**
-target formats, automatically detecting and adapting column naming differences
-(e.g., SAMPLE_ID/SAMPLE_LOC vs. SAMPLE_ID/SAMPLE_NAME). It reproduces the
-geometry, colors, fiducials, and text labels exactly as defined by the .cht file.
+Examples of Targets can be found at:
+Wolf Faust's IT8 targets (12641-1): 
+http://www.targets.coloraid.de
+LaserSoft's Advanced IT8 target (12641-2): 
+https://www.silverfast.com/products-overview-products-company-lasersoft-imaging/it8-targets-for-scanner-calibration-profiling-for-predictable-brilliant-colors/
+
+Specialized software and hardware are often used for calibration of displays and 
+printers, but an open source alternative, which also is used by many professional 
+software products, is ArgyllCMS (http://argyllcms.com/index.html). This python 
+script allows anyone to create a digital image with the same colors that the 
+pysical target has, which they bought.
+
+This version of rectarg has been tested on **Wolf Faust**, **LaserSoft** and 
+**Hutchcolor** target formats, automatically detecting and adapting column naming 
+and patch positions. It attempts to faitfully reproduce the geometry, colors, 
+fiducials, and text labels as defined by the .cht and .cie files.
 
 --------------------------------------------------------------------------------
 KEY FEATURES
