@@ -4,7 +4,7 @@
 ================================================================================
         rectarg.py v1.0  —  Complete Reference and Usage Notes
 ================================================================================
-Author: Knut Larsson with support from ChatGPT
+Author: Soul-Traveller with support from ChatGPT
 
 Recreate a calibration target as an image from ArgyllCMS-style `.cht` + `.cie` pair.
 
