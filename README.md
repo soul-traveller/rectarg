@@ -84,16 +84,13 @@ EXAMPLES
 --------------------------------------------------------------------------------
 
 # Standard 300 DPI reconstruction for Wolf Faust IT8.7/2 target
-python3 rectarg.py R230122W.cht R230122W.txt output_300dpi.tif \
-    --background-color GS10
+python3 rectarg.py R230122W.cht R230122W.txt output_300dpi.tif --background-color GS10
 
 # LaserSoft Advanced Color Calibration Target (sample files)
-python3 rectarg.py R250715.cht R250715.cie output_300dpi.tif \
-    --background-color M33
+python3 rectarg.py R250715.cht R250715.cie output_300dpi.tif --background-color M33
 
 # High-resolution 600 DPI render
-python3 rectarg.py R230122W.cht R230122W.txt output_600dpi.tif \
-    --target_dpi 600
+python3 rectarg.py R230122W.cht R230122W.txt output_600dpi.tif --target_dpi 600
 
 # Geometrically aligned output using measured fiducial pixels
 python3 rectarg.py R230122W.cht R230122W.txt output_aligned.tif \
@@ -120,7 +117,8 @@ Optional flags:
         Supported reference scales: 72, 100, 200, 300, 600, 1200 DPI.
 
   --background-color PATCH_ID
-        Use the specified patch’s color as the background (e.g. `GS10`, `M33`).
+        Use the specified patch’s color as the background (e.g. `GS10` (Wolf Faust), 
+        `M33` (LaserSoft)).
 
   --font PATH
         TrueType/TTC font file for label and footer rendering. If not found,
@@ -144,17 +142,18 @@ Optional flags:
 SCALING MODEL (unit → pixel)
 --------------------------------------------------------------------------------
 
-• All coordinates in the `.cht` are defined in **100-DPI units**.
-  The script dynamically rescales these to the target DPI while preserving the
+• Coordinates in the `.cht` file is used to find best match A4 format with dpi, 
+  but scaled up or down to 300dpi if not specifed in the command arguments.
+  The script dynamically rescales to the target DPI while preserving the
   physical chart dimensions.
 
 • For known A4-fit DPIs (72, 100, 200, 300, 600, 1200), scaling is derived from exact
   A4 dimensions to maintain consistent physical proportions.
 
-• Example at 300 DPI:
+• If 100dpi is detected, scaling factor is calulated in reference to 300 DPI:
       scale_x ≈ 2.9988 px/unit
       scale_y ≈ 3.0009 px/unit
-  → Each 25.625 unit patch becomes ≈ 77×77 px (≈ 6.52 mm per side)
+  → Each 25.625 unit patch (at 100dpi) becomes ≈ 77×77 px (≈ 6.52 mm per side)
 
 --------------------------------------------------------------------------------
 FIDUCIAL MARKS
@@ -170,7 +169,7 @@ PATCH AREA DEFINITIONS (Y and X lines)
 --------------------------------------------------------------------------------
 
 • “Y” area defines the main color patch grid (rows × columns)
-• “X” area usually defines grayscale strips or supplementary rows
+• “X” area defines a second patch grid set
 
 Syntax example:
     Y 01 22 A L 25.625 25.625 26.625 26.625 25.625 25.625
