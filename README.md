@@ -26,6 +26,13 @@ This version of rectarg has been tested on **Wolf Faust**, **LaserSoft** and
 and patch positions. It attempts to faitfully reproduce the geometry, colors, 
 fiducials, and text labels as defined by the .cht and .cie files.
 
+Note!
+For the LaserSoft ISO 12641-2 reflective chart, the ISO12641_2_1.cht file that
+supplied by ArgyllCMS (available after installation) is used. And, LaserSoft
+does not supply a .cie type file, but is created using the supplied reference 
+.CxF file downloaded from the Silverfast website, and the ArgyllCMS command
+cxf2ti3 Rnnnnnn.cxf Rnnnnnn
+
 --------------------------------------------------------------------------------
 KEY FEATURES
 --------------------------------------------------------------------------------
