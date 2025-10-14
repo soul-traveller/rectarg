@@ -1,6 +1,6 @@
-================================================================================
-        rectarg.py v1.0  —  Complete Reference and Usage Notes
-================================================================================
+--------------------------------------------------------------------------------
+rectarg.py v1.0  —  Complete Reference and Usage Notes
+--------------------------------------------------------------------------------
 Author: Knut Larsson with support from ChatGPT
 
 Recreate a calibration target as an image from ArgyllCMS-style `.cht` + `.cie` pair.
@@ -244,4 +244,4 @@ NOTES
 • Accurately preserves patch layout, margins, and fiducial geometry  
 • Ideal for verification, visualization, or reprinting reference targets  
 
-================================================================================
+--------------------------------------------------------------------------------
