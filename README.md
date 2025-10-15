@@ -1,6 +1,7 @@
 --------------------------------------------------------------------------------
 rectarg.py v1.0  —  Complete Reference and Usage Notes
 --------------------------------------------------------------------------------
+Author: Knut Larsson
 
 Recreate a calibration target as an image from ArgyllCMS-style `.cht` + `.cie` 
 pair. Calibration targets are used for calibration of scanners and displays so 
@@ -32,6 +33,13 @@ does not supply a .cie type file, but is created using the supplied reference
 .CxF file downloaded from the Silverfast website, and the ArgyllCMS command
 cxf2ti3 Rnnnnnn.cxf Rnnnnnn
 
+See information on ArgyleCMS https://argyllcms.com/doc/Scenarios.html#PS2
+for various Types of test charts and if cie and cht files exist from them.
+If some suppliers deliver propietary files and cie-type data reference file
+will have to be made manually (not that much work). I that case, using the
+format and names used by the Wolf Faust IT8.7/2 Target is the best bit for
+rectarg to work proberly.
+
 --------------------------------------------------------------------------------
 KEY FEATURES
 --------------------------------------------------------------------------------
@@ -46,7 +54,7 @@ KEY FEATURES
 
 • Uses `.cht` coordinates directly (origin at 0,0) — no fiducial offset applied
 
-• Renders color patches and optional grayscale rows:
+• Renders color patches and optional grayscale rows (modeled on Wolf Faust Target):
   - Patch IDs automatically generated from label start/end tokens
   - LAB → XYZ (D50) → sRGB (D65 via Bradford) conversion
   - 16-bit integer RGB output ensures full precision
@@ -57,6 +65,7 @@ KEY FEATURES
   - Top and left patch labels, **plus mirrored labels on bottom and right sides**
   - Physical sizing in mm maintained via exact pixel scaling
   - Footer text block with origin, descriptor, manufacturer, and creation info
+  - Text Font and Size can be specified for better fit ('--font' and '--font_mm')
 
 • Background color can be set from any patch ID (`--background-color`)
 
@@ -74,7 +83,7 @@ COMMAND LINE USAGE
 --------------------------------------------------------------------------------
 
     For simplicity: Go to a folder in terminal. Place this script as well as 
-    .cht and cie file in folder. Run command as shown below.
+    .cht and .cie file in folder. Run command as shown below.
 
     python3 rectarg.py <chart.cht> <data.cie> <output.tif>
         [--target_dpi DPI]
@@ -127,8 +136,8 @@ Optional flags:
         `M33` (LaserSoft)).
 
   --font PATH
-        TrueType/TTC font file for label and footer rendering. If not found,
-        the script searches common system font paths (DejaVuSans, Helvetica, Arial).
+        TrueType/TTC/TTF font file for label and footer rendering. If not found,
+        the script searches common system font paths (Palatino, Helvetica, Times, Arial, DejaVuSans).
 
   --font_mm LABEL_MM FOOTER_MM
         Physical text heights for patch labels and footer text (default = 2.0 mm each).
@@ -165,7 +174,7 @@ SCALING MODEL (unit → pixel)
 FIDUCIAL MARKS
 --------------------------------------------------------------------------------
 
-• Defined by `F` lines in `.cht` as four coordinate pairs (clockwise from top-left)
+• Defined by `F` lines in `.cht` file as four coordinate pairs (clockwise from top-left)
 • Drawn as L-shaped corner marks; size and line thickness scale with DPI
   (≈ 5 px at 300 DPI)
 • Used to verify geometry, or (with `--map-fids`) to warp to measured pixel locations
@@ -177,20 +186,31 @@ PATCH AREA DEFINITIONS (Y and X lines)
 • “Y” area defines the main color patch grid (rows × columns)
 • “X” area defines a second patch grid set
 
-Syntax example:
+Syntax example, from Wolf Faust Target:
     Y 01 22 A L 25.625 25.625 26.625 26.625 25.625 25.625
     X GS00 GS23 _ _ 25.625 51.25 1.0 360.5 25.625 0
 
 Interpreted as:
     [xstart, xend, ystart, yend, tile_x, tile_y, pre_x, pre_y, post_x, post_y]
 
-• Labels:
-    - Numeric: 01–22 → “01”…“22”
-    - Alphabetic: A–L → “A”…“L”
-    - Prefixed: GS00–GS23 → “GS00”…“GS23”
-    - “_” disables labels for that axis
+  • Labels:
+      - Numeric [xstart, xend]: 01–22 → “01”…“22”
+      - Alphabetic [ystart, yend]: A–L → “A”…“L”
+      - Prefixed [xstart, xend]: GS00–GS23 → “GS00”…“GS23”
+      - “_” disables labels for that axis
 
-• Each patch ID (e.g. A01) is matched to corresponding data in `.cie`.
+  • Grid defining coordinates:
+      - [tile_x, tile_y]: Pixel units (at a given dpi defined by originator) 
+        for color patch.
+      - [pre_x, pre_y]: Chart area padding. Pixcel units from reference (0,0) where first patch is 
+        placed.
+      - [post_x, post_y]: Chart area padding. Pixel units added in x direction 
+        after last column for the specifed patch grid area, and added in y direction 
+        after last row placement.
+
+• Each patch ID (e.g. A01) is matched to corresponding data in `.cie`. Supports
+  recognition of label differences, such as A1 vs A01, or with or without quotes
+  (A1 vs "A1").
 
 --------------------------------------------------------------------------------
 COLOR CONVERSION
