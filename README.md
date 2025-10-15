@@ -1,10 +1,21 @@
 --------------------------------------------------------------------------------
-rectarg.py v1.0  —  Complete Reference and Usage Notes
+        rectarg.py v1.0  —  Complete Reference and Usage Notes
 --------------------------------------------------------------------------------
 Author: Knut Larsson
 
 Recreate a calibration target as an image from ArgyllCMS-style `.cht` + `.cie` 
-pair. Calibration targets are used for calibration of scanners and displays so 
+pair. 
+
+With a digital image with colors representing the physical calibration target one 
+can do the following (and possibly more):
+        - For Displays: One could compare display calibration on screen against 
+                        the physical target directly.
+        - For Printer:  One could print a clean target without scanning errors and 
+                        compare printout of the target against physical target.
+        - For Scanner:  Compare a scanned target using a calibrated profile against
+                        original colors directly on screen.
+
+Calibration targets are used for calibration of scanners and displays so 
 that screen and scanned material look the same. Usually, those that sell 
 Calibration Targets keep their original digital image for them self, for business 
 reasons.
