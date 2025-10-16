@@ -52,6 +52,33 @@ format and names used by the Wolf Faust IT8.7/2 Target is the best bit for
 rectarg to work proberly.
 
 --------------------------------------------------------------------------------
+Provided CHT Files
+--------------------------------------------------------------------------------
+Most targets tested with this script were provided with the ArgyllCMS software,
+and many of those have probably been made manually, as several had odd config-
+urations and dummy data, which caused bad images by rectarg. For the purpose of 
+generating nive looking images  I have edited several of the .cht files. Those 
+that want to experiment with getting exact match of fiducials to original target 
+may modify the cht file, or use those provided for a nice printout. Details on 
+how to interpret the specification inside the cht file is provided further down.
+
+In order to get a good image the script had in some cases to be run with cerain
+command line flags, which I will show below.
+
+LaserSoftDCPro: 
+CHT data is very small numbers, resulting in a 72dpi base 
+resolution. Thus, the applied 15mm margin looks large complared to the rest of
+the chart. This is the command to get decent text and layout with provided cht 
+file:
+python3 rectarg.py LaserSoftDCPro.cht D120104.txt --target_dpi 200 \
+        LaserSoftDCPro-200dpi.tif --font_mm 1.5 1.0
+
+QPcard_202:
+python3 rectarg.py QPcard_202.cht QPcard_202.cie QPcard_202-200dpi.tif \
+        --target_dpi 200
+
+
+--------------------------------------------------------------------------------
 KEY FEATURES
 --------------------------------------------------------------------------------
 • Parses `.cht` layout definitions:
