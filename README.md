@@ -39,8 +39,11 @@ The script automatically detects and adapts column naming and patch positions.
 It attempts to faitfully reproduce the geometry, colors, fiducials, and text 
 labels as defined by the .cht and .cie files. If margins, font size or axis 
 labels are not positioned well, these parameters can be modified manually, 
-to experiment with best visal fit.
-
+to experiment with best visal fit. rectarg has been designed according the 
+assumption that fiducials should be placed outside of the row and column labels
+normally around the color patch area. When moving fiducels by changing the 
+cht file specificaiton lines placement of text may clash with fiducials or 
+labels if not adhering to this rule.
 
 Note!
 For the LaserSoft ISO 12641-2 reflective chart, the ISO12641_2_1.cht file that
