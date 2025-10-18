@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
-        rectarg.py v1.1  —  Complete Reference and Usage Notes
+rectarg.py v1.1 — Complete Reference and Usage Notes
 --------------------------------------------------------------------------------
 Author: Knut Larsson
 
