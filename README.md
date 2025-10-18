@@ -22,14 +22,14 @@ script allows anyone to create a digital image with the same colors that the
 pysical target has, which they bought.
 
 This version of rectarg has been tested on the following targets
-    - Wolf Faust IT8.7/2 Targets (12641-1), 
-    - LaserSoft Advanced Color Calibration Target IT8 (12641-2)
-    - CMP_Digital_Target-4 Target
-    - Hutchcolor HCT
-    - LaserSoft DCPro Studio Target
-    - QPcard_202 Target
-    - SpyderChecker Target
-    - SpyderChecker24 Target
+  - Wolf Faust IT8.7/2 Targets (12641-1)
+  - LaserSoft Advanced Color Calibration Target IT8 (12641-2)
+  - CMP_Digital_Target-4 Target
+  - Hutchcolor HCT
+  - LaserSoft DCPro Studio Target
+  - QPcard_202 Target
+  - SpyderChecker Target
+  - SpyderChecker24 Target
 
 There is a good chance rectarg may be used successfully on other cht cie file, 
 however ColorCheckerPassport is not supported, as cht file has parametes that this
