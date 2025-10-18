@@ -90,7 +90,7 @@ KEY FEATURES
 
 • Uses `.cht` coordinates directly (origin at 0,0) — no fiducial offset applied
 
-• Renders multiple defined color patche ares (modeled on Wolf Faust Target, 
+• Renders multiple defined color patche areas (modeled on Wolf Faust Target, 
   LaserSoft Advanced Target and Christophe Métairie's Digital Target - 4):
   - LAB → XYZ (D50) → sRGB (D65 via Bradford) conversion
   - May use LAB, XYZ data in CIE file (RGB handling not implemented).
