@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 """
-================================================================================
-        rectarg.py v1.1  —  Complete Reference and Usage Notes
-================================================================================
+--------------------------------------------------------------------------------
+rectarg.py v1.1 — Complete Reference and Usage Notes
+--------------------------------------------------------------------------------
 Author: Knut Larsson
 
 Recreate a calibration target as an image from ArgyllCMS-style `.cht` + `.cie` 
@@ -54,10 +54,6 @@ cxf2ti3 Rnnnnnn.cxf Rnnnnnn
 
 If output comes as gray patches only, it is likely the cie file does not use
 lab color space, which is defualt. Change to xyz with "--intent xyz". 
-Several of the cht files supplied by ArgyllCMS had wrong or incorrect settings
-for fiducials or patch area placement for this script to give a nice output. 
-Thus, some of the supplied cht files have been modified to work well. You may
-experiment with these settings to get your desired look.
 
 See information on ArgyleCMS https://argyllcms.com/doc/Scenarios.html#PS2
 for various Types of test charts and if cie and cht files exist from them.
@@ -65,6 +61,20 @@ If some suppliers deliver propietary files and cie-type data reference file
 will have to be made manually (not that much work). I that case, using the
 format and names used by the Wolf Faust IT8.7/2 Target is the best bit for
 rectarg to work proberly.
+
+
+--------------------------------------------------------------------------------
+Provided CHT Files
+--------------------------------------------------------------------------------
+Most targets tested with this script were provided with the ArgyllCMS software,
+and many of those have probably been made manually, as several had odd config-
+urations and dummy data, which caused bad images by rectarg. 
+
+For the purpose of generating nice looking images I have edited the definition 
+part of several of the .cht files. Those that want to experiment with getting 
+exact match of fiducials to original target may modify the cht file, or use those 
+provided for a nice printout. Details on how to interpret the specification inside 
+the cht file is provided further down.
 
 --------------------------------------------------------------------------------
 KEY FEATURES
@@ -98,10 +108,12 @@ KEY FEATURES
   - Hides labels if two patch areas are too close to each other.
   - Required clearance between defined patch areas is calculated dynamically, 
     based on the maximum label size plus 2 mm buffer.
-    That way: Column labels appear only if there’s at least (font_height + 2 mm) 
-    vertical gap. Row labels appear only if there’s at least (max_label_width + 2 mm) 
-    horizontal gap. If column labels are rotated, rotated label’s longest dimension 
-    is used instead of height.
+    That way: 
+        - Column labels appear only if there’s at least (font_height + 2 mm) 
+          vertical gap. If column labels are rotated, rotated label’s longest 
+          dimension is used instead of font_height.
+        - Row labels appear only if there’s at least (max_label_width + 2 mm) 
+          horizontal gap. 
 
 • Background color can be set from any patch ID (`--background-color`)
 
@@ -134,49 +146,6 @@ COMMAND LINE USAGE
         [--map-fids x1,y1,x2,y2,x3,y3,x4,y4]
         [--png]
         [--debug]
-
---------------------------------------------------------------------------------
-EXAMPLES
---------------------------------------------------------------------------------
-The following commands have been used to create a nice looking target, using sample 
-cie and cht files. Use your own cie files to get a correct image for your target:
-
-# Wolf Faust IT8.7/2 target for display
-python3 rectarg.py R230122W.cht R230122W.txt output.tif --target_dpi 300 \
-    --background GS10 --intent display --label_axis_visible X=B
-
-# LaserSoft Advanced Color Calibration Target, Absolute Colorimetric.
-python3 rectarg.py ISO12641_2_1.cht R250715.cie R250715_200dpi.tif \
-    --background-color M33 --target_dpi 200
-
-# Hutchcolor HCT, Absolute Colorimetric
-python3 rectarg.py Hutchcolor.cht 0579.txt Hutchcolor-200dpi.tif \
-    --target_dpi 200 --color_space xyz
-
-# CMP_Digital_Target-4 target for display
-python3 rectarg.py CMP_Digital_Target-4.cht CMP_Digital_Target-4.cie \
-    CMP_Digital_Target-4-200dpi.tif --target_dpi 200 --color_space xyz \
-    --intent display --label_axis_visible X=TRB
-
-# LaserSoft DCPro Studio Target for display
-python3 rectarg.py LaserSoftDCPro.cht D120104.txt LaserSoftDCPro-200dpi.tif \
-    --target_dpi 200 --intent display --font_mm 1 1 --margin 7
-
-# QPcard_202 Target, Absolute Colorimetric
-python3 rectarg.py QPcard_202.cht QPcard_202.cie QPcard_202-200dpi.tif \
-    --target_dpi 200 --font_mm 2.5 2.5
-
-# SpyderChecker Target, Absolute Colorimetric
-python3 rectarg.py SpyderChecker.cht SpyderChecker.cie SpyderChecker-200dpi.tif \
-    --target_dpi 200 --color_space xyz
-
-# SpyderChecker24, Absolute Colorimetric
-python3 rectarg.py SpyderChecker24.cht SpyderChecker24.cie SpyderChecker24-200dpi.tif \
-    --target_dpi 200 --color_space xyz
-
-# Wolf Faust IT8.7/2 target with custom font and text size (in mm)
-python3 rectarg.py R230122W.cht R230122W.txt output_font.tif \
-    --font /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf --font_mm 3.0 2.0
 
 --------------------------------------------------------------------------------
 ARGUMENTS
@@ -243,6 +212,49 @@ Optional flags:
         and color conversion verification. Normal mode prints minimal summary only.
 
 --------------------------------------------------------------------------------
+EXAMPLES
+--------------------------------------------------------------------------------
+The following commands have been used to create a nice looking target, using sample 
+cie and cht files. Use your own cie files to get a correct image for your target:
+
+# Wolf Faust IT8.7/2 target for display
+python3 rectarg.py R230122W.cht R230122W.txt output.tif --target_dpi 300 \
+    --background GS10 --intent display --label_axis_visible X=B
+
+# LaserSoft Advanced Color Calibration Target, Absolute Colorimetric.
+python3 rectarg.py ISO12641_2_1.cht R250715.cie R250715_200dpi.tif \
+    --background-color M33 --target_dpi 200
+
+# Hutchcolor HCT, Absolute Colorimetric
+python3 rectarg.py Hutchcolor.cht 0579.txt Hutchcolor-200dpi.tif \
+    --target_dpi 200 --color_space xyz
+
+# CMP_Digital_Target-4 target for display
+python3 rectarg.py CMP_Digital_Target-4.cht CMP_Digital_Target-4.cie \
+    CMP_Digital_Target-4-200dpi.tif --target_dpi 200 --color_space xyz \
+    --intent display --label_axis_visible X=TRB
+
+# LaserSoft DCPro Studio Target for display
+python3 rectarg.py LaserSoftDCPro.cht D120104.txt LaserSoftDCPro-200dpi.tif \
+    --target_dpi 200 --intent display --font_mm 1 1 --margin 7
+
+# QPcard_202 Target, Absolute Colorimetric
+python3 rectarg.py QPcard_202.cht QPcard_202.cie QPcard_202-200dpi.tif \
+    --target_dpi 200 --font_mm 2.5 2.5
+
+# SpyderChecker Target, Absolute Colorimetric
+python3 rectarg.py SpyderChecker.cht SpyderChecker.cie SpyderChecker-200dpi.tif \
+    --target_dpi 200 --color_space xyz
+
+# SpyderChecker24, Absolute Colorimetric
+python3 rectarg.py SpyderChecker24.cht SpyderChecker24.cie SpyderChecker24-200dpi.tif \
+    --target_dpi 200 --color_space xyz
+
+# Wolf Faust IT8.7/2 target with custom font and text size (in mm)
+python3 rectarg.py R230122W.cht R230122W.txt output_font.tif \
+    --font /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf --font_mm 3.0 2.0
+
+--------------------------------------------------------------------------------
 SCALING MODEL (unit → pixel)
 --------------------------------------------------------------------------------
 
@@ -267,6 +279,18 @@ FIDUCIAL MARKS
 • Drawn as L-shaped corner marks; size and line thickness scale with DPI
   (≈ 5 px at 300 DPI)
 • Used to verify geometry, or (with `--map-fids`) to warp to measured pixel locations
+
+--------------------------------------------------------------------------------
+Full Chart Definition
+--------------------------------------------------------------------------------
+
+The line defined by 'D' at the start of the line, in the cht file, may look like this:
+D ALL ALL _ _ 613 433 49.0 33.0 0 0
+
+The two first numbers shown here usually depict the full size of the complete 
+chart. These numbers must be calculated and provided, else the rectarg script may 
+give odd output, missing rows etc. However, the main defining area of the image
+generated is the fiducial positions and the Patch Area definitions.
 
 --------------------------------------------------------------------------------
 PATCH AREA DEFINITIONS (Y and X lines)
@@ -301,14 +325,15 @@ Interpreted as:
 
 • Each patch ID (e.g. A01) is matched to corresponding data in `.cie`. Supports
   recognition of label differences, such as A1 vs A01, or with or without quotes
-  (A1 vs "A1").
+  (A1 vs "A1"), or special labels with preceding number, like "2A1".
 
 --------------------------------------------------------------------------------
 COLOR CONVERSION
 --------------------------------------------------------------------------------
 
-• Preferred data columns: LAB_L / LAB_A / LAB_B  
-  Fallbacks: “L*”, “A*”, “B*” or equivalent variants.
+• Default data columns from cie file: LAB_L / LAB_A / LAB_B  
+  Fallbacks: “L*”, “A*”, “B*” or equivalent variants. 
+  Alterntively, data columns can be selected to use XYZ columns.
 
 • Conversion pipeline:
       LAB (D50) → XYZ (D50) → XYZ (D65 via Bradford) → sRGB (IEC 61966-2-1)
@@ -324,15 +349,18 @@ LABELS AND TEXT
   Example: 2.0 mm → 24 px at 300 DPI.
 
 • Patch grid labels, depending on cht file definition:
-    For Wolf Faust and Lasersoft Targets:
-    - Columns (numbers) → top + bottom
-    - Rows (letters) → left + right
+  By default column and row labels are placed on all sides of a patch area.
+  This can be configured by --label_axis_visible AXIS_NAME=FLAG
 
 • Footer block includes:
-    - CREATED date (if available)
+    - 'CREATED' date (if available)
     - Data file name
     - Center text: “Reproduction of Target from reference data”
-    - ORIGINATOR, DESCRIPTOR, and MANUFACTURER fields (right-aligned)
+    - 'ORIGINATOR', 'DESCRIPTOR', and 'MANUFACTURER' fields (right-aligned)
+  Some files converted by AryllCMS tools to cie type may use very different 
+  defining parameter names for the above. To get the info displayed correctly
+  with rectarg you should rename the appropriate parameter according names 
+  mentioned above. Those are based on parameters used in Wolf Faust IT8.7/2 Target
 
 --------------------------------------------------------------------------------
 OUTPUT
@@ -347,8 +375,7 @@ DIAGNOSTICS
 --------------------------------------------------------------------------------
 
 Normal mode:
-    Prints summary lines for detected DPI, scaling, background patch, footer size,
-    and save confirmation.
+    Prints summary lines for detected DPI, background patch, and save confirmation.
 
 Debug mode (`--debug`):
     Prints detailed breakdowns of:
@@ -666,13 +693,13 @@ def parse_it8_or_cie(path, color_space='lab'):
 
     # --- Optional debug output for verifying column detection ---
     if globals().get("DEBUG_PARSE", False):
-        debug_print(f"[Debug] Detected indices: LAB=({idxL},{idxA},{idxB}), "
+        print(f"[Debug] Detected indices: LAB=({idxL},{idxA},{idxB}), "
             f"RGB=({idxR},{idxG},{idxB_rgb}), XYZ=({idxX},{idxY},{idxZ})")
         # print one example record
         if data_map:
             sample_key = next(iter(data_map))
             vals = data_map[sample_key]["vals"]
-            debug_print(f"[Debug] Example entry: {sample_key} -> LAB=({vals[idxL] if idxL is not None else 'N/A'}, "
+            print(f"[Debug] Example entry: {sample_key} -> LAB=({vals[idxL] if idxL is not None else 'N/A'}, "
                   f"{vals[idxA] if idxA is not None else 'N/A'}, "
                   f"{vals[idxB] if idxB is not None else 'N/A'})")
             
@@ -1235,11 +1262,11 @@ def recreate(cht_path, cie_path, out_path, target_dpi=DEFAULT_TARGET_DPI,
     used_dpi = float(target_dpi) if user_specified_dpi else 300.0
 
     # Print diagnostic info
-    debug_print(f"Detected native chart DPI (fit to A4): {detected_dpi} dpi. ", end="")
+    print(f"Detected native chart DPI (fit to A4): {detected_dpi} dpi. ", end="")
     if user_specified_dpi:
-        debug_print(f"Requested target_dpi={used_dpi} dpi.")
+        print(f"Requested target_dpi={used_dpi} dpi.")
     else:
-        debug_print(f"No target_dpi specified -> rendering at {used_dpi} dpi by default (preserve physical size).")
+        print(f"No target_dpi specified -> rendering at {used_dpi} dpi by default (preserve physical size).")
 
     # --- Compute scale factors relative to the detected A4 match ---
     # Each A4 DPI has a known pixel size (A4_DPI_TABLE)
@@ -1385,7 +1412,7 @@ def recreate(cht_path, cie_path, out_path, target_dpi=DEFAULT_TARGET_DPI,
                 rgb_display = np.clip(rgb_lin, 0.0, 1.0)
                 rgb16 = (rgb_display * 65535.0).astype(np.uint16)
                 canvas[:, :, :] = rgb16
-                debug_print(f"Background filled from patch '{bg_label}' → RGB {rgb_display}")
+                print(f"Background filled from patch '{bg_label}' → RGB {rgb_display}")
 
             except Exception as e:
                 print(f"Warning: failed to apply background from patch '{bg_label}': {e}", file=sys.stderr)
