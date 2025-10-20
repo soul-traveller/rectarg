@@ -9,6 +9,15 @@ that screen and scanned material look the same. Usually, those that sell
 Calibration Targets keep their original digital image for them self, for business 
 reasons.
 
+With a digital image with colors representing the physical calibration target one 
+can do the following (and possibly more): 
+  - For Displays: One could compare display calibration on screen against the physical
+    target directly.
+  - For Printer: One could print a clean target without scanning errors and compare
+    printout of the target against physical target.
+  - For Scanner: Compare a scanned target using a calibrated profile against original
+    colors directly on screen.
+
 Examples of Targets can be found at:
 Wolf Faust's IT8 targets (12641-1): 
 http://www.targets.coloraid.de
