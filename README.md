@@ -4,7 +4,13 @@ rectarg.py v1.1 — Complete Reference and Usage Notes
 Author: Knut Larsson
 
 Recreate a calibration target as an image from ArgyllCMS-style `.cht` + `.cie` 
-pair. Calibration targets are used for calibration of scanners and displays so 
+pair, that preserve the target’s colorimetric values and physical sizing for 
+printing and display softproofing. The tool implements color conversions 
+(LAB → XYZ (D50) → sRGB (D65 via Bradford)), renders fiducials, labels, exact 
+patch geometry, and supports options for DPI, text sizing, mapping fiducials, 
+and color intent.
+
+Calibration targets are used for calibration of scanners and displays so 
 that screen and scanned material look the same. Usually, those that sell 
 Calibration Targets keep their original digital image for them self, for business 
 reasons.
@@ -70,6 +76,83 @@ If some suppliers deliver propietary files and cie-type data reference file
 will have to be made manually (not that much work). I that case, using the
 format and names used by the Wolf Faust IT8.7/2 Target is the best bit for
 rectarg to work proberly.
+
+--------------------------------------------------------------------------------
+Methods for Assigning / Converting to ICC Profiles
+--------------------------------------------------------------------------------
+In some use cases an ICC profile neds to be applied to an image. For these 
+intances one may, for example, use one of the following applications:
+  - ArgyllCMS
+  - ImageMagic, or
+  - Photoshop
+  - Gimp (Open Source)
+  - ColorSync Utility (Mac OS)
+
+Examples:
+1. macOS ColorSync Utility
+  Assign Profile: changes declared space (no pixel change).
+  Convert to Profile: colorimetrically converts pixel values.
+  Use only for scans or proof conversions — not for rectarg outputs.
+2. Adobe Photoshop
+  Edit → Assign Profile… (only for untagged files).
+  Edit → Convert to Profile… (for proof conversions).
+3. GIMP (open source)
+  Image → Color Management → Assign Color Profile…
+  Image → Color Management → Convert to Color Profile…
+  Use for scanner ICC assignments or proof conversions.
+
+--------------------------------------------------------------------------------
+Use Cases for Created Target Image
+--------------------------------------------------------------------------------
+Generally:
+  - Use absolute intent image is colorimetric truth for numerical or colorimetric
+    comparison only, like when measuring Lab values etc. Image is too dark for
+    printing or comparison against physical reference target.
+  - Use display intent image is visually faithful representation → for visual
+    side-by-side comparison with the physical target or softproofing.
+
+• If you want to produce a printable target that looks like the physical chart 
+  (for visual comparison) you can do the following:
+  Option 1: Use rectarg display intent image directly. Print it with color 
+            management ON (normal sRGB → printer conversion through your 
+            calibrated printer profile). That should yield a print that perceptually 
+            matches the physical target, for comparison against original physical
+            reference target.
+
+  Option 2: Comparison of Printed Image against Soft-Proofing Image
+            Create a soft-proofing image for on-screen comparison against a printed target.
+            Use display-intent image from rectarg and apply a printer's ICC profile
+            via an application to create the soft-proofing image, for example:
+
+        # Example command using ImageMagic
+        magic rectarg_image_display.tif -profile printer.icc rectarg_image_printproof.tif
+
+        # Example command using ArgyllCMS, applying perceptual intent
+        cctiff -i p -v printer.icm rectarg_image_display.tif rectarg_image_printproof.tif
+
+• If you want to compare a scanned image of the reference target on-screen against
+  created image from rectarg:
+  Use rectarg display intent image directly. Compare against scanned image on-screen,
+  assuming scanner uses calibrated icc/icm profile. If scanner output is raw, without
+  any profile, then apply a scanner profile onto scanned image before comparing
+  against rectarg display intent image.
+
+• If you want to compare a calibrated display against physical reference target:
+  Use rectarg display intent image directly, on the display that has color
+  management ON (using its icc/icm profile). Then compare against physical target.
+
+Overview:
+| Use Case                       | Image Intent        | Already Tagged As | Should You Assign / Convert ICC? | Color Management Setting   | Purpose                               |
+| ------------------------------ | ------------------- | ----------------- | -------------------------------- | -------------------------- | ------------------------------------- |
+| **Display measurement**        | absolute            | linear sRGB       | ❌ No                             | System CM ON (monitor ICC) | Compare numeric accuracy              |
+| **Display visual check**       | display             | sRGB (gamma 2.2)  | ❌ No                             | System CM ON               | Visual layout & color check           |
+| **Printer visual comparison**  | display             | sRGB              | ✅ Convert through printer ICC    | Printer CM ON              | Match physical chart visually         |
+| **Printer profiling**          | display             | —                 | —                                 | CM OFF                     | Use true device stimuli. Rectarg not considered try device stimuly, but try and see.               |
+| **Scanner profiling**          | — (physical target) | —                 | -                                 | CM OFF                      | Build/verify scanner profile          |
+| **Scanner visual comparison**  | display             | sRGB              | ❌ No                             | CM ON                      | Visual compare scan vs. target        |
+| **Scanner numeric comparison** | absolute            | linear sRGB       | ❌ No                             | CM ON                      | Compare measured Lab vs. reference    |
+
+
 
 
 --------------------------------------------------------------------------------
