@@ -1,4 +1,6 @@
-# rectarg.py v1.1
+---
+v1.1
+---
 # Reference and Usage Guide
 
 **Author:** Knut Larsson  
@@ -18,7 +20,8 @@
 8. [ICC Profile Management](#icc-profile-management)
 9. [Features](#features)
 10. [Provided CHT Files](#provided-cht-files)
-11. [Technical Reference](#technical-reference)
+11. [Trouble Shooting](#trouble-shooting)
+12. [Technical Reference](#technical-reference)
     - [Scaling Model](#scaling-model)
     - [Fiducial Marks](#fiducial-marks)
     - [Chart Definition](#chart-definition)
@@ -27,7 +30,7 @@
     - [Labels and Text](#labels-and-text)
     - [Output](#output)
     - [Diagnostics](#diagnostics)
-12. [Notes](#notes)
+13. [Notes](#notes)
 
 ---
 
@@ -102,13 +105,12 @@ python3 rectarg.py R230122W.cht R230122W.txt output.tif   --target_dpi 300 --bac
 | Positional | `<output.tif>` | Output filename (16-bit TIFF) |
 | Optional | `--target_dpi [DPI]` | Output resolution (default: A4-fit scaled to 300 DPI) |
 | Optional | `--background-color [PATCH_ID]` | Use specified patch color as background |
-| Optional | `--intent [absolute|display]` | Color conversion intent. `absolute` (default): Calibration reference / technical validation Keeps exact colorimetric data. Linear sRGB, 16-bit TIFF. D50→D65 adaptation only (no gamma), no perceptual modification. `display`: Screen visualization / preview image added gamma encoding (nonlinear tone mapping), 16-bit TIFF with gamma. |
-| Optional | `--color_space [lab|xyz]` | Input color space (default: lab) |
-| Optional | `--label_axis_visible [L|T|R|B|ALL|NONE]` | Manually toggle label sides. Left, Top, Right, Bottom, ALL (default), NONE. Can be speficified multiple times. Example: `--label_axis_visible X=B --label_axis_visible Y=RT` Forces only bottom label for area X, as well as right and top labels for area Y. |
+| Optional | `--intent [absolute;display]` | Color conversion intent. <br>`absolute` : Calibration reference / technical validation Keeps exact colorimetric data. Linear sRGB, 16-bit TIFF. D50→D65 adaptation only (no gamma), no perceptual modification.<br>`display` (default): Screen visualization / preview image added gamma 2.2 encoding (nonlinear tone mapping), 16-bit TIFF with gamma. |
+| Optional | `--color_space [lab;xyz]` | Input color space (default: lab) |
+| Optional | `--label_axis_visible [AREA_NAME]=[L;T;R;B;ALL;NONE]` | Manually toggle label sides. Left, Top, Right, Bottom, ALL (default), NONE. Can be speficified multiple times. <br>Example: `--label_axis_visible X=B --label_axis_visible Y=RT` Forces only bottom label for area X, as well as right and top labels for area Y. |
 | Optional | `--margin [MM]` | Page margin in millimeters (default: 15) |
 | Optional | `--font [PATH]` | TrueType font path. If not found, the script searches common system font paths (Palatino, Helvetica, Times, Arial, DejaVuSans) |
 | Optional | `--font_mm [LABEL_MM] [FOOTER_MM]` | Physical text heights (default: 2 mm) |
-| Optional | `--map-fids x1,y1,x2,y2,x3,y3,x4,y4` | Manual fiducial mapping. Order: top-left, top-right, bottom-right, bottom-left. |
 | Optional | `--png` | Save PNG preview |
 | Optional | `--debug` | Enable diagnostic output |
 
@@ -120,33 +122,53 @@ For simplicity: Go to a folder in terminal. Place this script as well as `.cht` 
 
 ```bash
 # Wolf Faust IT8.7/2 target for display
-python3 rectarg.py R230122W.cht R230122W.txt output.tif     --target_dpi 300 --background GS10 --intent display --label_axis_visible X=B
+python3 rectarg.py R230122W.cht R230122W.txt output.tif --target_dpi 300 --background GS10 --label_axis_visible X=B
+
+# Wolf Faust IT8.7/2 target with custom font and text size (in mm)
+python3 rectarg.py R230122W.cht R230122W.txt output_font.tif --font /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf --font_mm 3.0 2.0
 
 # LaserSoft IT8 target, Absolute Colorimetric
-python3 rectarg.py ISO12641_2_1.cht R250715.cie output.tif     --background-color N33 --target_dpi 200
+python3 rectarg.py ISO12641_2_1.cht R250715.cie output.tif --intent absolute --background-color N33 --target_dpi 200
 
-# Hutchcolor HCT (XYZ data)
-python3 rectarg.py Hutchcolor.cht 0579.txt Hutchcolor.tif     --target_dpi 200 --color_space xyz
+# Hutchcolor HCT (XYZ data) for display
+python3 rectarg.py Hutchcolor.cht 0579.txt Hutchcolor.tif --target_dpi 200 --color_space xyz
 
 # CMP Digital Target-4 for display
-python3 rectarg.py CMP_Digital_Target-4.cht CMP_Digital_Target-4.cie output.tif     --target_dpi 200 --color_space xyz --intent display --label_axis_visible X=TRB
+python3 rectarg.py CMP_Digital_Target-4.cht CMP_Digital_Target-4.cie output.tif --target_dpi 200 --color_space xyz --label_axis_visible Y=TLB --label_axis_visible X=TRB --font_mm 1.5 1.5
 
-# QPcard_202 Target
-python3 rectarg.py QPcard_202.cht QPcard_202.cie output.tif     --target_dpi 200 --font_mm 2.5 2.5
+# LaserSoft DCPro Studio Target for display
+python3 rectarg.py LaserSoftDCPro.cht D120104.txt LaserSoftDCPro-200dpi.tif --target_dpi 200 --intent absolute --font_mm 1 1 --margin 7
+ 
+# QPcard_202 Target, Absolute Colorimetric
+python3 rectarg.py QPcard_202.cht QPcard_202.cie output.tif --intent absolute --target_dpi 200 --font_mm 2.5 2.5
+
+# SpyderChecker Target, Absolute Colorimetric
+python3 rectarg.py SpyderChecker.cht SpyderChecker.cie SpyderChecker-200dpi.tif --intent absolute --target_dpi 200 --color_space xyz
+
+# SpyderChecker24 for display
+python3 rectarg.py SpyderChecker24.cht SpyderChecker24.cie SpyderChecker24-200dpi.tif --target_dpi 200 --color_space xyz
 ```
 
 ---
 
 ## Use Cases
-### Generally
+### General
 * Use absolute intent image is colorimetric truth for numerical or colorimetric comparison only, like when measuring Lab values etc. Image is too dark for printing or comparison against physical reference target.
 * Use display intent image is visually faithful representation → for visual side-by-side comparison with the physical target or softproofing.
 
-If you want to produce a printable target that looks like the physical chart (for visual comparison) you can do the following:
+### Example Use Cases
+1. If you want to produce a printable target that looks like the physical chart (for visual comparison) you can do the following:
 
    - Option 1: Use rectarg display intent image directly. Print it with color management ON (normal sRGB → printer conversion through your calibrated printer profile). That should yield a print that perceptually matches the physical target, for comparison against original physical reference target.
 
    - Option 2: Comparison of Printed Image against Soft-Proofing Image Create a soft-proofing image for on-screen comparison against a printed target. Use display-intent image from rectarg and apply a printer's ICC profile via an application to create the soft-proofing image.
+
+2. If you want to compare a scanned image of the reference target on-screen against created image from rectarg: Use rectarg display intent image directly. Compare against scanned image on-screen, assuming scanner uses calibrated icc/icm profile. If scanner output is raw, without any profile, then apply a scanner profile onto scanned image before comparing against rectarg display intent image.
+
+3. If you want to compare a calibrated display against physical reference target: Use rectarg display intent image directly on the display that has color management ON (using its icc/icm profile). Then compare against physical target.
+
+4. If you want to profile printer: Use rectarg display intent image and print without color management. Then scan/measure printed image and create icc-profile. If hand scanner is used, scale the image to maximise chart size when printing, if possible.
+
 
 ### Overview of Use Cases
 
@@ -154,10 +176,10 @@ If you want to produce a printable target that looks like the physical chart (fo
 |-----------|---------------|------------|----------------|------------------|----------|
 | Display measurement | absolute | linear sRGB | No | ON (monitor ICC) | Numeric accuracy |
 | Display visual check | display | sRGB (γ2.2) | No | ON | Visual comparison |
-| Printer visual comparison | display | sRGB | Yes | ON | Match physical chart visually |
-| Printer profiling | display | — | — | OFF | Experimental use |
+| Printer visual comparison | display | sRGB (γ2.2) | Yes <br>(soft-proofing) | ON | Match physical chart visually |
+| Printer profiling | display | sRGB (γ2.2) | — | OFF | Build printer profile |
 | Scanner profiling | — | — | — | OFF | Build/verify scanner profile |
-| Scanner visual comparison | display | sRGB | No | ON | Visual compare scan vs target |
+| Scanner visual comparison | display | sRGB (γ2.2) | No | ON | Visual compare scan vs target |
 | Scanner numeric comparison | absolute | linear sRGB | No | ON | Compare measured Lab vs reference |
 
 ### Intent Notes
@@ -210,6 +232,17 @@ Most targets tested with this script were provided with the ArgyllCMS software, 
 For the purpose of generating nice looking images I have edited the definition part of several of the .cht files. Those that want to experiment with getting exact match of fiducials to original target may modify the cht file, or use those provided for a nice printout. 
 
 Details on how to interpret the specification inside the cht file is provided below.
+
+---
+
+## Trouble Shooting
+
+* If individual gray patches appear instead of colors: Related Patch ID cannot be cannot be found in `.cie` file. 
+* If all patches come out as gray: 
+ - `Patch Area` line (ex. `Y`) in `.cht` layout definitions has label definitions that cannot be found in `.cie` file.
+ - Patch Labels cannot be found in `.cie` file.
+* If fiducial marks are positioned wrong:
+ - `F` line in `.cht` layout definitions has wrong coordinate numbers. 
 
 ---
 
@@ -266,6 +299,7 @@ Interpreted as:
       - “_” disables labels for that axis
       - Each patch ID (e.g. A01) is matched to corresponding data in `.cie`. 
       - Supports recognition of label differences, such as A1 vs A01, or with or without quotes (A1 vs "A1"), or special labels with preceding number, like "2A1".
+      - Supports two letter running alphabetical labels, like A-AX → “A”…“AX”.
 
 - Grid defining coordinates:
       - [tile_x, tile_y]: Pixel units (at a given dpi defined by originator) for color patch.
