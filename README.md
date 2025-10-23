@@ -239,10 +239,10 @@ Details on how to interpret the specification inside the cht file is provided be
 
 * If individual gray patches appear instead of colors: Related Patch ID cannot be cannot be found in `.cie` file. 
 * If all patches come out as gray: 
- - `Patch Area` line (ex. `Y`) in `.cht` layout definitions has label definitions that cannot be found in `.cie` file.
- - Patch Labels cannot be found in `.cie` file.
+   - `Patch Area` line (ex. `Y`) in `.cht` layout definitions has label definitions that cannot be found in `.cie` file.
+   - Patch Labels cannot be found in `.cie` file.
 * If fiducial marks are positioned wrong:
- - `F` line in `.cht` layout definitions has wrong coordinate numbers. 
+   - `F` line in `.cht` layout definitions has wrong coordinate numbers. 
 
 ---
 
