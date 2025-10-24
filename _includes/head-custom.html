@@ -1,9 +1,25 @@
-<meta property="og:title" content="{{ page.title | default: site.title }}">
-<meta property="og:description" content="{{ page.description | default: site.description }}">
-<meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/rectarg-preview.png">
-<meta property="fb:app_id" content="0">
-<meta property="og:type" content="website">
-<meta property="og:image:width" content="752">
-<meta property="og:image:height" content="599">
+<!-- Basic Meta -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="{{ page.description | default: site.description }}">
 <meta name="keywords" content="{{ page.keywords | default: site.keywords }}">
 <meta name="author" content="{{ page.author | default: site.author }}">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:title" content="{{ page.title | default: site.title }}">
+<meta property="og:description" content="{{ page.description | default: site.description }}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/rectarg-preview.png">
+<meta property="og:image:width" content="752">
+<meta property="og:image:height" content="599">
+<meta property="og:locale" content="{{ site.lang | default: 'en_US' }}">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page.title | default: site.title }}">
+<meta name="twitter:description" content="{{ page.description | default: site.description }}">
+<meta name="twitter:image" content="{{ site.url }}{{ site.baseurl }}/rectarg-preview.png">
+
+<!-- Canonical -->
+<link rel="canonical" href="{{ page.url | absolute_url }}">
