@@ -1,2 +1,14 @@
 theme: jekyll-theme-cayman
 markdown: kramdown
+
+title: "rectarg – Recreate Calibration Target Image"
+description: "Generate a calibration target image with accurate colorimetric data based on ArgyllCMS-compatible .cht and .cie files."
+author: "Knut Larsson"
+lang: en
+keywords: "rectarg, ArgyllCMS, color calibration, calibration target, IT8 target, ICC profile, color management, colorimetric reference, printer profiling, scanner profiling, display calibration, soft proofing, color science, LAB to sRGB conversion, XYZ color space, D50 to D65 adaptation, Bradford transform, color chart generation, fiducial marks, patch area definitions, calibration image generator, color target reconstruction, calibration chart, color reproduction accuracy, spectrophotometer target, Hutchcolor HCT, Wolf Faust IT8, LaserSoft IT8, CMP Digital Target-4, QPcard 202, SpyderChecker, SpyderChecker24, TIFF 16-bit, PNG preview, Python color tool, image calibration, device profiling, colorimetric comparison, linear sRGB, technical validation, absolute colorimetric intent, display intent, ICC workflow, color patch labeling, color conversion chain, LAB XYZ sRGB, Jekyll site, open-source color management, color target visualization"
+
+plugins:
+  - jekyll-sitemap
+
+url: "https://soul-traveller.github.io"
+baseurl: "/rectarg"

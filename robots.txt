@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://soul-traveller.github.io/rectarg/sitemap.xml
