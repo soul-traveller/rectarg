@@ -1,12 +1,9 @@
----
-v1.1
----
 # Reference and Usage Guide
-
+**Version:** 1.1
 **Author:** Knut Larsson  
 **Purpose:** Generate a calibration target image from ArgyllCMS `.cht` and `.cie` pairs, preserving colorimetric values and physical dimensions for printing or soft-proofing.
 
----
+___
 
 ## Table of Contents
 
@@ -32,7 +29,7 @@ v1.1
     - [Diagnostics](#diagnostics)
 13. [Notes](#notes)
 
----
+___
 
 ## Overview
 
@@ -52,7 +49,7 @@ For example targets, see:
 
 ArgyllCMS (http://argyllcms.com) is a professional open-source color management system widely used for calibration workflows.
 
----
+___
 
 ## Supported Targets
 
@@ -68,7 +65,7 @@ Tested successfully with:
 
 > **Note:** There is a good chance rectarg may be used successfully on other cht-cie file pairs, but ColorChecker Passport is not supported due to unsupported `.cht` parameters.
 
----
+___
 
 ## Installation
 
@@ -81,7 +78,7 @@ pip install numpy Pillow tifffile argparse scipy
 Required: `numpy`, `Pillow (PIL)`, `tifffile`, `argparse`  
 Optional: `scipy`
 
----
+___
 
 ## Command-Line Usage
 
@@ -94,7 +91,7 @@ python3 rectarg.py <chart.cht> <data.cie> <output.tif> [options]
 python3 rectarg.py R230122W.cht R230122W.txt output.tif   --target_dpi 300 --background GS10 --intent display --label_axis_visible X=B
 ```
 
----
+___
 
 ## Arguments
 
@@ -114,7 +111,7 @@ python3 rectarg.py R230122W.cht R230122W.txt output.tif   --target_dpi 300 --bac
 | Optional | `--png` | Save PNG preview |
 | Optional | `--debug` | Enable diagnostic output |
 
----
+___
 
 ## Examples
 
@@ -149,7 +146,7 @@ python3 rectarg.py SpyderChecker.cht SpyderChecker.cie SpyderChecker-200dpi.tif 
 python3 rectarg.py SpyderChecker24.cht SpyderChecker24.cie SpyderChecker24-200dpi.tif --target_dpi 200 --color_space xyz
 ```
 
----
+___
 
 ## Use Cases
 ### General
@@ -187,7 +184,7 @@ python3 rectarg.py SpyderChecker24.cht SpyderChecker24.cie SpyderChecker24-200dp
 - **Absolute intent:** Colorimetric truth for numerical analysis. Too dark for printing.
 - **Display intent:** Visually faithful representation for on-screen comparison.
 
----
+___
 
 ## ICC Profile Management
 
@@ -210,7 +207,7 @@ magick rectarg_image_display.tif -profile printer.icc rectarg_image_printproof.t
 cctiff -i p -v printer.icm rectarg_image_display.tif rectarg_image_printproof.tif
 ```
 
----
+___
 
 ## Features
 
@@ -223,7 +220,7 @@ cctiff -i p -v printer.icm rectarg_image_display.tif rectarg_image_printproof.ti
 - Optional PNG preview
 - Margin and font customization
 
----
+___
 
 ## Provided cht Files
 
@@ -233,7 +230,7 @@ For the purpose of generating nice looking images I have edited the definition p
 
 Details on how to interpret the specification inside the `.cht` file are provided below.
 
----
+___
 
 ## Troubleshooting
 
@@ -245,7 +242,7 @@ Details on how to interpret the specification inside the `.cht` file are provide
 * If fiducial marks are positioned wrong:
    - `F` line in `.cht` layout definitions has wrong coordinate numbers. 
 
----
+___
 
 ## Technical Reference
 
@@ -344,7 +341,7 @@ Interpreted as:
 **Normal mode:** Summary only.  
 **Debug mode:** Detailed info on scaling, geometry, patch mapping, and colors.
 
----
+___
 
 ## Notes
 
@@ -353,6 +350,6 @@ Interpreted as:
 - Maintains geometry, margins, and fiducials.
 - Ideal for calibration, visualization, and reference reprints.
 
----
+___
 
 **End of README**
