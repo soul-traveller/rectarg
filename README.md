@@ -19,8 +19,8 @@ v1.1
 7. [Use Cases](#use-cases)
 8. [ICC Profile Management](#icc-profile-management)
 9. [Features](#features)
-10. [Provided CHT Files](#provided-cht-files)
-11. [Trouble Shooting](#trouble-shooting)
+10. [Provided cht Files](#provided-cht-files)
+11. [Troubleshooting](#troubleshooting)
 12. [Technical Reference](#technical-reference)
     - [Scaling Model](#scaling-model)
     - [Fiducial Marks](#fiducial-marks)
@@ -100,14 +100,14 @@ python3 rectarg.py R230122W.cht R230122W.txt output.tif   --target_dpi 300 --bac
 
 | Type | Argument | Description |
 |------|-----------|-------------|
-| Positional | `<chart.cht>` | Chart definition file (ArgyllCMS .cht) |
-| Positional | `<data.cie>` | Reference or measurement data (.cie, .txt, or IT8) |
+| Positional | `<chart.cht>` | Chart definition file (ArgyllCMS `.cht`) |
+| Positional | `<data.cie>` | Reference or measurement data (`.cie`, `.txt`, or `IT8`) |
 | Positional | `<output.tif>` | Output filename (16-bit TIFF) |
 | Optional | `--target_dpi [DPI]` | Output resolution (default: A4-fit scaled to 300 DPI) |
 | Optional | `--background-color [PATCH_ID]` | Use specified patch color as background |
 | Optional | `--intent [absolute;display]` | Color conversion intent. <br>`absolute` : Calibration reference / technical validation Keeps exact colorimetric data. Linear sRGB, 16-bit TIFF. D50→D65 adaptation only (no gamma), no perceptual modification.<br>`display` (default): Screen visualization / preview image added gamma 2.2 encoding (nonlinear tone mapping), 16-bit TIFF with gamma. |
 | Optional | `--color_space [lab;xyz]` | Input color space (default: lab) |
-| Optional | `--label_axis_visible [AREA_NAME]=[L;T;R;B;ALL;NONE]` | Manually toggle label sides. Left, Top, Right, Bottom, ALL (default), NONE. Can be speficified multiple times. <br>Example: `--label_axis_visible X=B --label_axis_visible Y=RT` Forces only bottom label for area X, as well as right and top labels for area Y. |
+| Optional | `--label_axis_visible [AREA_NAME]=[L;T;R;B;ALL;NONE]` | Manually toggle label sides. Left, Top, Right, Bottom, ALL (default), NONE. Can be specified multiple times. <br>Example: `--label_axis_visible X=B --label_axis_visible Y=RT` Forces only bottom label for area X, as well as right and top labels for area Y. |
 | Optional | `--margin [MM]` | Page margin in millimeters (default: 15) |
 | Optional | `--font [PATH]` | TrueType font path. If not found, the script searches common system font paths (Palatino, Helvetica, Times, Arial, DejaVuSans) |
 | Optional | `--font_mm [LABEL_MM] [FOOTER_MM]` | Physical text heights (default: 2 mm) |
@@ -118,7 +118,7 @@ python3 rectarg.py R230122W.cht R230122W.txt output.tif   --target_dpi 300 --bac
 
 ## Examples
 
-For simplicity: Go to a folder in terminal. Place this script as well as `.cht` and `.cie` file in folder. Run command as shown below.
+For simplicity, open a terminal and go to a folder of choice. Place this script as well as `.cht` and `.cie` file in the folder. Run command as shown below.
 
 ```bash
 # Wolf Faust IT8.7/2 target for display
@@ -153,8 +153,8 @@ python3 rectarg.py SpyderChecker24.cht SpyderChecker24.cie SpyderChecker24-200dp
 
 ## Use Cases
 ### General
-* Use absolute intent image is colorimetric truth for numerical or colorimetric comparison only, like when measuring Lab values etc. Image is too dark for printing or comparison against physical reference target.
-* Use display intent image is visually faithful representation → for visual side-by-side comparison with the physical target or softproofing.
+* Use the absolute intent image as colorimetric truth for numerical or colorimetric comparison only, e.g., when measuring Lab values. Image is too dark for printing or comparison against physical reference target.
+* Use the display intent image as visually faithful representation → for visual side-by-side comparison with the physical target or softproofing.
 
 ### Example Use Cases
 1. If you want to produce a printable target that looks like the physical chart (for visual comparison) you can do the following:
@@ -165,9 +165,9 @@ python3 rectarg.py SpyderChecker24.cht SpyderChecker24.cie SpyderChecker24-200dp
 
 2. If you want to compare a scanned image of the reference target on-screen against created image from rectarg: Use rectarg display intent image directly. Compare against scanned image on-screen, assuming scanner uses calibrated icc/icm profile. If scanner output is raw, without any profile, then apply a scanner profile onto scanned image before comparing against rectarg display intent image.
 
-3. If you want to compare a calibrated display against physical reference target: Use rectarg display intent image directly on the display that has color management ON (using its icc/icm profile). Then compare against physical target.
+3. If you want to compare a calibrated display against physical reference target: Use the rectarg display intent image directly on the display with color management enabled (ON). Then compare against physical target.
 
-4. If you want to profile printer: Use rectarg display intent image and print without color management. Then scan/measure printed image and create icc-profile. If hand scanner is used, scale the image to maximise chart size when printing, if possible.
+4. If you want to profile printer: Use rectarg display intent image and print without color management (OFF). Then scan/measure printed image and create icc-profile. If hand scanner is used, scale the image to maximize chart size when printing, if possible.
 
 
 ### Overview of Use Cases
@@ -225,20 +225,21 @@ cctiff -i p -v printer.icm rectarg_image_display.tif rectarg_image_printproof.ti
 
 ---
 
-## Provided CHT Files
+## Provided cht Files
 
 Most targets tested with this script were provided with the ArgyllCMS software, and many of those have probably been made manually, as several had odd configurations and dummy data, which caused bad images by rectarg. 
 
-For the purpose of generating nice looking images I have edited the definition part of several of the .cht files. Those that want to experiment with getting exact match of fiducials to original target may modify the cht file, or use those provided for a nice printout. 
+For the purpose of generating nice looking images I have edited the definition part of several of the `.cht` files. Those who want to experiment with getting an exact match of fiducials to original target may modify the `.cht` file, or use those provided for a nice printout. 
 
-Details on how to interpret the specification inside the cht file is provided below.
+Details on how to interpret the specification inside the `.cht` file are provided below.
 
 ---
 
-## Trouble Shooting
+## Troubleshooting
 
-* If individual gray patches appear instead of colors: Related Patch ID cannot be cannot be found in `.cie` file. 
+* If individual gray patches appear instead of colors: Related Patch ID cannot be found in `.cie` file. 
 * If all patches come out as gray: 
+   - Selection of color space is wrong. If `.cie` file does not contain columns related to selected color space, try other color space with flag `--color_space [lab;xyz]`.
    - `Patch Area` line (ex. `Y`) in `.cht` layout definitions has label definitions that cannot be found in `.cie` file.
    - Patch Labels cannot be found in `.cie` file.
 * If fiducial marks are positioned wrong:
@@ -251,11 +252,11 @@ Details on how to interpret the specification inside the cht file is provided be
 ### Scaling Model
 
 - `.cht` coordinates used directly; rescaled to chosen DPI.
-- Physical proportions preserved for A4-fit DPIs (72, 100, 200, 300, 600, 1200).
+- Physical proportions are preserved for A4-fit DPIs (72, 100, 200, 300, 600, 1200).
 
 Example:
 
-	If 100dpi is detected, scaling factor is calulated in reference to 300 DPI:
+	If 100dpi is detected, scaling factor is calculated in reference to 300 DPI:
 	  - scale_x ≈ 2.9988 px/unit
 	  - scale_y ≈ 3.0009 px/unit
 	  - Each 25.625 unit patch (at 100dpi) becomes ≈ 77×77 px (≈ 6.52 mm per side)
@@ -269,7 +270,7 @@ Example:
 
 - Defined by `D` line in `.cht`.
 - `D` line defines overall chart dimensions.
-- If two first (x,y) coordinates are not specified correclty, chart may not generate properly. 
+- Not used by rectarg.
 
 Example:
 ```
@@ -281,7 +282,7 @@ D ALL ALL _ _ 613 433 49.0 33.0 0 0
 - Defined by `Y` and `X` lines in `.cht`.
 - `Y` defines main color patch grid.
 - `X` defines secondary grid area.
-- Nameing should be unique per patch area.
+- Naming should be unique per patch area.
 
 Example (Wolf Faust Target):
 ```
@@ -303,14 +304,14 @@ Interpreted as:
 
 - Grid defining coordinates:
       - [tile_x, tile_y]: Pixel units (at a given dpi defined by originator) for color patch.
-      - [pre_x, pre_y]: Chart area padding. Pixcel units from reference (0,0) where first patch is placed.
-      - [post_x, post_y]: Chart area padding. Pixel units added in x direction after last column for the specifed patch grid area, and added in y direction after last row placement.
+      - [pre_x, pre_y]: Chart area padding. Pixel units from reference (0,0) where first patch is placed.
+      - [post_x, post_y]: Chart area padding. Pixel units added in x direction after last column for the specified patch grid area, and added in y direction after last row placement.
 
 
 ### Color Conversion
 
 - Default data columns from cie file: LAB
-- Alterntively, data columns can be selected to use XYZ columns. 
+- Alternatively, data columns can be selected to use XYZ columns. 
 - Conversion chain: LAB (D50) → XYZ (D50) → XYZ (D65 via Bradford) → sRGB (IEC 61966-2-1)
 - Resulting RGB values are not clipped or manipulated to preserve true reference colors.
 
@@ -329,7 +330,7 @@ Interpreted as:
       - Data file name
       - Center text: “Reproduction of Target from reference data”
       - 'ORIGINATOR', 'DESCRIPTOR', and 'MANUFACTURER' fields (right-aligned)
-      - Some files converted by AryllCMS tools to cie type may use very different defining parameter names for the above. To get the info displayed correctly with rectarg you should rename the appropriate parameter according names mentioned above. Those are based on parameters used in Wolf Faust IT8.7/2 Target
+      - Some files converted by ArgyllCMS tools to cie type may use very different defining parameter names for the above. To get the info displayed correctly with rectarg you should rename the appropriate parameter according names mentioned above. Those are based on parameters used in Wolf Faust IT8.7/2 Target
 
 
 
