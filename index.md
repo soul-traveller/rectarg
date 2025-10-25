@@ -1,4 +1,4 @@
-# regtarg
+# rectarg
 # Reference and Usage Guide
 **Version:** 1.1
 **Author:** Knut Larsson
