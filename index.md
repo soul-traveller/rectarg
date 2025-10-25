@@ -1,8 +1,13 @@
 # rectarg
 # Reference and Usage Guide
-**Version:** 1.1
-**Author:** Knut Larsson
+**Version:** 1.1<br>
+**Author:** Knut Larsson<br>
 **Purpose:** Generate a calibration target image from ArgyllCMS `.cht` and `.cie` pairs, preserving colorimetric values and physical dimensions for printing or soft-proofing.
+
+Example of generated image made with reference data file from LaserSoft Advanced IT8 target (12641-2):
+<p align="center">
+  <img src="rectarg-preview.png" alt="rectarg color target made with reference data file from LaserSoft Advanced IT8 target (12641-2)" width="600">
+</p>
 
 ___
 
@@ -47,9 +52,6 @@ Calibration targets ensure scanners, printers, and displays show colors consiste
 For example targets, see:
 - [Wolf Faust IT8 targets (12641-1)](http://www.targets.coloraid.de)
 - [LaserSoft Advanced IT8 target (12641-2)](https://www.silverfast.com/products-overview-products-company-lasersoft-imaging/it8-targets-for-scanner-calibration-profiling-for-predictable-brilliant-colors/)
-<p align="center">
-  <img src="rectarg-preview.png" alt="rectarg color target made with reference data file from LaserSoft Advanced IT8 target (12641-2)" width="400">
-</p>
 
 [ArgyllCMS](http://argyllcms.com) is a professional open-source color management system widely used for calibration workflows.
 
@@ -63,7 +65,7 @@ Tested successfully with `.cht` and `.cie` files for:
 - [LaserSoft Advanced IT8 target (12641-2)](https://www.silverfast.com/products-overview-products-company-lasersoft-imaging/it8-targets-for-scanner-calibration-profiling-for-predictable-brilliant-colors/)
 - [Christophe Métairie's Digital Target - 4](https://www.cmp-color.fr/DT2019.html)
 - [Hutchcolor HCT](http://www.hutchcolor.com/HCT_contents.htm)
-- LaserSoft [SilverFast DCPro Studio Target](https://www.silverfast.com/show/dc-targets/en.html)
+- [LaserSoft SilverFast DCPro Studio Target](https://www.silverfast.com/show/dc-targets/en.html)
 - [QPcard 202 Reference Target](https://www.argraph.com/QPcard/QPCard202Flyer.pdf)
 - [SpyderChecker & SpyderChecker24 Targets](https://www.datacolor.com/spyder/products/spyder-checkr-24/)
 
