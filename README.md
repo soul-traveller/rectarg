@@ -47,24 +47,29 @@ Calibration targets ensure scanners, printers, and displays show colors consiste
 For example targets, see:
 - [Wolf Faust IT8 targets (12641-1)](http://www.targets.coloraid.de)
 - [LaserSoft Advanced IT8 target (12641-2)](https://www.silverfast.com/products-overview-products-company-lasersoft-imaging/it8-targets-for-scanner-calibration-profiling-for-predictable-brilliant-colors/)
+<p align="center">
+  <img src="rectarg-preview.png" alt="rectarg color target made with reference data file from LaserSoft Advanced IT8 target (12641-2)" width="400">
+</p>
 
-ArgyllCMS (http://argyllcms.com) is a professional open-source color management system widely used for calibration workflows.
+[ArgyllCMS](http://argyllcms.com) is a professional open-source color management system widely used for calibration workflows.
 
 ___
 
 ## Supported Targets
 
-Tested successfully with:
+Tested successfully with `.cht` and `.cie` files for:
 
-- Wolf Faust IT8.7/2 Targets (12641-1)
-- LaserSoft Advanced Color Calibration Target IT8 (12641-2)
-- CMP Digital Target-4
-- Hutchcolor HCT
-- LaserSoft DCPro Studio Target
-- QPcard_202 Target
-- SpyderChecker & SpyderChecker24 Targets
+- [Wolf Faust IT8 targets (12641-1)](http://www.targets.coloraid.de)
+- [LaserSoft Advanced IT8 target (12641-2)](https://www.silverfast.com/products-overview-products-company-lasersoft-imaging/it8-targets-for-scanner-calibration-profiling-for-predictable-brilliant-colors/)
+- [Christophe Métairie's Digital Target - 4](https://www.cmp-color.fr/DT2019.html)
+- [Hutchcolor HCT](http://www.hutchcolor.com/HCT_contents.htm)
+- LaserSoft [SilverFast DCPro Studio Target](https://www.silverfast.com/show/dc-targets/en.html)
+- [QPcard 202 Reference Target](https://www.argraph.com/QPcard/QPCard202Flyer.pdf)
+- [SpyderChecker & SpyderChecker24 Targets](https://www.datacolor.com/spyder/products/spyder-checkr-24/)
 
-> **Note:** There is a good chance rectarg may be used successfully on other cht-cie file pairs, but ColorChecker Passport is not supported due to unsupported `.cht` parameters.
+> **Notes:**
+  1. There is a good chance rectarg may be used successfully on other cht-cie file pairs, but ColorChecker Passport is not supported due to unsupported `.cht` parameters.
+  2. `.cht` files for many targets can be found on [Argyll's GitHub Page](https://github.com/capnm/ArgyllCMS/tree/master/ref)
 
 ___
 
