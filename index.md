@@ -70,8 +70,8 @@ Tested successfully with `.cht` and `.cie` files for:
 - [SpyderChecker & SpyderChecker24 Targets](https://www.datacolor.com/spyder/products/spyder-checkr-24/)
 
 > **Notes:**
-  1. There is a good chance rectarg may be used successfully on other cht-cie file pairs, but ColorChecker Passport is not supported due to unsupported `.cht` parameters.
-  2. `.cht` files for many targets can be found on [Argyll's GitHub Page](https://github.com/capnm/ArgyllCMS/tree/master/ref)
+   1. There is a good chance rectarg may be used successfully on other cht-cie file pairs, but ColorChecker Passport is not supported due to unsupported `.cht` parameters.
+   2. In addition to those supplied and tested with rectarg, `.cht` files for many targets can be found on [Argyll's GitHub Page](https://github.com/capnm/ArgyllCMS/tree/master/ref).
 
 ___
 
@@ -315,7 +315,7 @@ Interpreted as:
 
 ### Color Conversion
 
-- Default data columns from cie file: LAB
+- Default data columns from `.cie` file: LAB
 - Alternatively, data columns can be selected to use XYZ columns.
 - Conversion chain: LAB (D50) → XYZ (D50) → XYZ (D65 via Bradford) → sRGB (IEC 61966-2-1)
 - Resulting RGB values are not clipped or manipulated to preserve true reference colors.
@@ -335,7 +335,7 @@ Interpreted as:
       - Data file name
       - Center text: “Reproduction of Target from reference data”
       - 'ORIGINATOR', 'DESCRIPTOR', and 'MANUFACTURER' fields (right-aligned)
-      - Some files converted by ArgyllCMS tools to cie type may use very different defining parameter names for the above. To get the info displayed correctly with rectarg you should rename the appropriate parameter according names mentioned above. Those are based on parameters used in Wolf Faust IT8.7/2 Target
+      - Some files converted by ArgyllCMS tools to `.cie` type may use very different defining parameter names for the above. To get the info displayed correctly with rectarg you should rename the appropriate parameter according names mentioned above. Those are based on parameters used in Wolf Faust IT8.7/2 Target
 
 
 
