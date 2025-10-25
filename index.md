@@ -1,6 +1,7 @@
+# regtarg
 # Reference and Usage Guide
 **Version:** 1.1
-**Author:** Knut Larsson  
+**Author:** Knut Larsson
 **Purpose:** Generate a calibration target image from ArgyllCMS `.cht` and `.cie` pairs, preserving colorimetric values and physical dimensions for printing or soft-proofing.
 
 ___
@@ -75,7 +76,7 @@ ___
 pip install numpy Pillow tifffile argparse scipy
 ```
 
-Required: `numpy`, `Pillow (PIL)`, `tifffile`, `argparse`  
+Required: `numpy`, `Pillow (PIL)`, `tifffile`, `argparse`
 Optional: `scipy`
 
 ___
@@ -135,7 +136,7 @@ python3 rectarg.py CMP_Digital_Target-4.cht CMP_Digital_Target-4.cie output.tif 
 
 # LaserSoft DCPro Studio Target for display
 python3 rectarg.py LaserSoftDCPro.cht D120104.txt LaserSoftDCPro-200dpi.tif --target_dpi 200 --intent absolute --font_mm 1 1 --margin 7
- 
+
 # QPcard_202 Target, Absolute Colorimetric
 python3 rectarg.py QPcard_202.cht QPcard_202.cie output.tif --intent absolute --target_dpi 200 --font_mm 2.5 2.5
 
@@ -224,9 +225,9 @@ ___
 
 ## Provided cht Files
 
-Most targets tested with this script were provided with the ArgyllCMS software, and many of those have probably been made manually, as several had odd configurations and dummy data, which caused bad images by rectarg. 
+Most targets tested with this script were provided with the ArgyllCMS software, and many of those have probably been made manually, as several had odd configurations and dummy data, which caused bad images by rectarg.
 
-For the purpose of generating nice looking images I have edited the definition part of several of the `.cht` files. Those who want to experiment with getting an exact match of fiducials to original target may modify the `.cht` file, or use those provided for a nice printout. 
+For the purpose of generating nice looking images I have edited the definition part of several of the `.cht` files. Those who want to experiment with getting an exact match of fiducials to original target may modify the `.cht` file, or use those provided for a nice printout.
 
 Details on how to interpret the specification inside the `.cht` file are provided below.
 
@@ -234,13 +235,13 @@ ___
 
 ## Troubleshooting
 
-* If individual gray patches appear instead of colors: Related Patch ID cannot be found in `.cie` file. 
-* If all patches come out as gray: 
+* If individual gray patches appear instead of colors: Related Patch ID cannot be found in `.cie` file.
+* If all patches come out as gray:
    - Selection of color space is wrong. If `.cie` file does not contain columns related to selected color space, try other color space with flag `--color_space [lab;xyz]`.
    - `Patch Area` line (ex. `Y`) in `.cht` layout definitions has label definitions that cannot be found in `.cie` file.
    - Patch Labels cannot be found in `.cie` file.
 * If fiducial marks are positioned wrong:
-   - `F` line in `.cht` layout definitions has wrong coordinate numbers. 
+   - `F` line in `.cht` layout definitions has wrong coordinate numbers.
 
 ___
 
@@ -253,10 +254,10 @@ ___
 
 Example:
 
-	If 100dpi is detected, scaling factor is calculated in reference to 300 DPI:
-	  - scale_x ≈ 2.9988 px/unit
-	  - scale_y ≈ 3.0009 px/unit
-	  - Each 25.625 unit patch (at 100dpi) becomes ≈ 77×77 px (≈ 6.52 mm per side)
+    If 100dpi is detected, scaling factor is calculated in reference to 300 DPI:
+      - scale_x ≈ 2.9988 px/unit
+      - scale_y ≈ 3.0009 px/unit
+      - Each 25.625 unit patch (at 100dpi) becomes ≈ 77×77 px (≈ 6.52 mm per side)
 
 ### Fiducial Marks
 
@@ -295,7 +296,7 @@ Interpreted as:
       - Alphabetic [ystart, yend]: A–L → “A”…“L”
       - Prefixed [xstart, xend]: GS00–GS23 → “GS00”…“GS23”
       - “_” disables labels for that axis
-      - Each patch ID (e.g. A01) is matched to corresponding data in `.cie`. 
+      - Each patch ID (e.g. A01) is matched to corresponding data in `.cie`.
       - Supports recognition of label differences, such as A1 vs A01, or with or without quotes (A1 vs "A1"), or special labels with preceding number, like "2A1".
       - Supports two letter running alphabetical labels, like A-AX → “A”…“AX”.
 
@@ -308,7 +309,7 @@ Interpreted as:
 ### Color Conversion
 
 - Default data columns from cie file: LAB
-- Alternatively, data columns can be selected to use XYZ columns. 
+- Alternatively, data columns can be selected to use XYZ columns.
 - Conversion chain: LAB (D50) → XYZ (D50) → XYZ (D65 via Bradford) → sRGB (IEC 61966-2-1)
 - Resulting RGB values are not clipped or manipulated to preserve true reference colors.
 
@@ -319,9 +320,9 @@ Interpreted as:
 - Top and left patch labels, plus mirrored labels on bottom and right sides
 - Physical sizing in mm maintained via pixel scaling. Example: 2.0 mm → 24 px at 300 DPI.
 - Hides labels if two patch areas are too close to each other.
-- Required clearance between defined patch areas is calculated dynamically, based on the maximum label size plus 2 mm buffer. That way: 
+- Required clearance between defined patch areas is calculated dynamically, based on the maximum label size plus 2 mm buffer. That way:
     - Column labels appear only if there’s at least (font height + 2 mm) vertical gap. If column labels are rotated, rotated label’s longest dimension is used instead of font height.
-    - Row labels appear only if there’s at least (max label width + 2 mm) horizontal gap. 
+    - Row labels appear only if there’s at least (max label width + 2 mm) horizontal gap.
 - Footer block includes:
       - 'CREATED' date (if available)
       - Data file name
@@ -338,7 +339,7 @@ Interpreted as:
 
 ### Diagnostics
 
-**Normal mode:** Summary only.  
+**Normal mode:** Summary only.
 **Debug mode:** Detailed info on scaling, geometry, patch mapping, and colors.
 
 ___
